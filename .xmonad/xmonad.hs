@@ -135,28 +135,22 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- SUPER + FUNCTION KEYS
   ----
 
-  [ ((modMask, xK_e), spawn $ "atom" )
-  , ((modMask, xK_c), spawn $ "conky-toggle" )
-  -- , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
-  , ((modMask, xK_m), spawn $ "pragha" )
+  [ 
+  --  ((modMask, xK_c), spawn $ "conky-toggle" )
+    ((modMask, xK_d), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
+  , ((modMask, xK_b), spawn $ "urxvt 'btop task manager' -e btop" )
   , ((modMask, xK_q), kill )
-  , ((modMask, xK_r), spawn $ "rofi-theme-selector" )
-  , ((modMask, xK_t), spawn $ "urxvt" )
   , ((modMask, xK_v), spawn $ "pavucontrol" )
-  , ((modMask, xK_y), spawn $ "polybar-msg cmd toggle" )
-  , ((modMask, xK_x), spawn $ "arcolinux-logout" )
-  , ((modMask, xK_z), sendMessage $ Toggle NBFULL)
+  , ((modMask, xK_r ), spawn $ "rofi -show drun -modi drun -config ~/.config/rofi/themes/dt-dmenu.rasi")
+  , ((modMask, xK_f), sendMessage $ Toggle NBFULL)
+
   , ((modMask, xK_Escape), spawn $ "xkill" )
-  -- , ((modMask, xK_Return), spawn $ "urxvt" )
   , ((modMask, xK_Return), spawn $ "alacritty" )
 
   , ((modMask, xK_F1), spawn $ "vivaldi-stable" )
-  , ((modMask, xK_F2), spawn $ "atom" )
-  , ((modMask, xK_F3), spawn $ "inkscape" )
-  , ((modMask, xK_F4), spawn $ "gimp" )
+  , ((modMask, xK_F4), spawn $ "arcolinux-logout")
   , ((modMask, xK_F5), spawn $ "meld" )
   , ((modMask, xK_F6), spawn $ "vlc --video-on-top" )
-  , ((modMask, xK_F9), spawn $ "evolution" )
   , ((modMask, xK_F11), spawn $ "rofi -show drun -fullscreen" )
   , ((modMask, xK_F12), spawn $ "rofi -show drun" )
 
@@ -171,7 +165,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----
 
   , ((modMask .|. shiftMask , xK_Return ), spawn $ "thunar")
-  , ((modMask .|. shiftMask , xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
   , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
   , ((modMask .|. shiftMask , xK_q ), kill)
   -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
@@ -179,9 +172,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----
   -- SUPER + CTRL + ... KEYS
   ----
-  , ((modMask .|. controlMask , xK_Return ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
 
-  , ((modMask .|. mod1Mask , xK_Return ), spawn $ "rofi -show drun -modi drun -config ~/.config/rofi/themes/dt-dmenu.rasi")
   ----
   -- CONTROL + ALT + ... KEYS
   ----
@@ -191,16 +182,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. mod1Mask , xK_c ), spawn $ "catfish")
   , ((controlMask .|. mod1Mask , xK_e ), spawn $ "arcolinux-tweak-tool")
   , ((controlMask .|. mod1Mask , xK_f ), spawn $ "firefox")
-  , ((controlMask .|. mod1Mask , xK_g ), spawn $ "chromium -no-default-browser-check")
   , ((controlMask .|. mod1Mask , xK_i ), spawn $ "nitrogen")
   , ((controlMask .|. mod1Mask , xK_o ), spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
   , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
-  , ((controlMask .|. mod1Mask , xK_r ), spawn $ "rofi-theme-selector")
-  , ((controlMask .|. mod1Mask , xK_s ), spawn $ "spotify")
-  , ((controlMask .|. mod1Mask , xK_t ), spawn $ "urxvt")
   , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
   , ((controlMask .|. mod1Mask , xK_v ), spawn $ "vivaldi-stable")
-  , ((controlMask .|. mod1Mask , xK_w ), spawn $ "arcolinux-welcome-app")
 
   ----
   -- ALT + ... KEYS
@@ -256,10 +242,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_space), sendMessage NextLayout)
 
   --Focus selected desktop
-  , ((mod1Mask, xK_Tab), nextWS)
+  , ((modMask .|. shiftMask, xK_Tab), prevWS)
 
   --Focus selected desktop
-  , ((modMask, xK_Tab), nextWS)
+  , ((modMask , xK_Tab), nextWS)
 
   --Focus selected desktop
   , ((controlMask .|. mod1Mask , xK_Left ), prevWS)
@@ -317,11 +303,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --qwerty users use this line
    | (i, k) <- zip (XMonad.workspaces conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
 
-  --French Azerty users use this line
-  -- | (i, k) <- zip (XMonad.workspaces conf) [xK_ampersand, xK_eacute, xK_quotedbl, xK_apostrophe, xK_parenleft, xK_minus, xK_egrave, xK_underscore, xK_ccedilla , xK_agrave]
 
-  --Belgian Azerty users use this line
-  -- | (i, k) <- zip (XMonad.workspaces conf) [xK_ampersand, xK_eacute, xK_quotedbl, xK_apostrophe, xK_parenleft, xK_section, xK_egrave, xK_exclam, xK_ccedilla, xK_agrave]
 
       , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)
       , (\i -> W.greedyView i . W.shift i, shiftMask)]]
