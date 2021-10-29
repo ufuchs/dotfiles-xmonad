@@ -151,14 +151,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_F4), spawn $ "arcolinux-logout")
   , ((modMask, xK_F5), spawn $ "meld" )
   , ((modMask, xK_F6), spawn $ "vlc --video-on-top" )
-  , ((modMask, xK_F11), spawn $ "rofi -show drun -fullscreen" )
-  , ((modMask, xK_F12), spawn $ "rofi -show drun" )
+  , ((modMask, xK_F7), spawn $ "rofi -show drun -fullscreen" )
+  , ((modMask, xK_F8), spawn $ "rofi -show drun" )
 
   ----
   -- FUNCTION KEYS
   ----
 
-  , ((0, xK_F12), spawn $ "xfce4-terminal --drop-down" )
+  -- , ((0, xK_F12), spawn $ "xfce4-terminal --drop-down" )
 
   ----
   -- SUPER + SHIFT KEYS
@@ -166,27 +166,28 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask .|. shiftMask , xK_Return ), spawn $ "thunar")
   , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
-  , ((modMask .|. shiftMask , xK_q ), kill)
+  -- , ((modMask .|. shiftMask , xK_q ), kill)
   -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
 
   ----
   -- SUPER + CTRL + ... KEYS
   ----
 
+  , ((controlMask .|. mod1Mask , xK_Next ), spawn $ "conky-rotate -n")
+  , ((controlMask .|. mod1Mask , xK_Prior ), spawn $ "conky-rotate -p")
+
   ----
   -- CONTROL + ALT + ... KEYS
   ----
-  , ((controlMask .|. mod1Mask , xK_Return ), spawn $ "")
-  , ((controlMask .|. mod1Mask , xK_Next ), spawn $ "conky-rotate -n")
-  , ((controlMask .|. mod1Mask , xK_Prior ), spawn $ "conky-rotate -p")
-  , ((controlMask .|. mod1Mask , xK_c ), spawn $ "catfish")
-  , ((controlMask .|. mod1Mask , xK_e ), spawn $ "arcolinux-tweak-tool")
-  , ((controlMask .|. mod1Mask , xK_f ), spawn $ "firefox")
-  , ((controlMask .|. mod1Mask , xK_i ), spawn $ "nitrogen")
+  -- , ((controlMask .|. mod1Mask , xK_Return ), spawn $ "")
+  -- , ((controlMask .|. mod1Mask , xK_c ), spawn $ "catfish")
+  -- , ((controlMask .|. mod1Mask , xK_e ), spawn $ "arcolinux-tweak-tool")
+  -- , ((controlMask .|. mod1Mask , xK_f ), spawn $ "firefox")
+  -- , ((controlMask .|. mod1Mask , xK_i ), spawn $ "nitrogen")
   , ((controlMask .|. mod1Mask , xK_o ), spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
-  , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
-  , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
-  , ((controlMask .|. mod1Mask , xK_v ), spawn $ "vivaldi-stable")
+  -- , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
+  -- , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
+  -- , ((controlMask .|. mod1Mask , xK_v ), spawn $ "vivaldi-stable")
 
   ----
   -- ALT + ... KEYS
@@ -198,7 +199,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   --CONTROL + SHIFT + ... KEYS
 
-  , ((controlMask .|. shiftMask , xK_Escape ), spawn $ "xfce4-taskmanager")
+  -- , ((controlMask .|. shiftMask , xK_Escape ), spawn $ "xfce4-taskmanager")
 
   --SCREENSHOTS
 
@@ -238,23 +239,22 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --------------------------------------------------------------------
   --  XMONAD LAYOUT KEYS
 
+  --
+  -- ALT-CTRL + ...
+  --
+
+  --Focus selected desktop
+  , ((mod1Mask .|.  controlMask, xK_Left ), prevWS)
+
+  --Focus selected desktop
+  , ((mod1Mask .|. controlMask, xK_Right ), nextWS)
+
+  --
+  -- SUPER + ...
+  --
+
   -- Cycle through the available layout algorithms.
   , ((modMask, xK_space), sendMessage NextLayout)
-
-  --Focus selected desktop
-  , ((modMask .|. shiftMask, xK_Tab), prevWS)
-
-  --Focus selected desktop
-  , ((modMask , xK_Tab), nextWS)
-
-  --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Left ), prevWS)
-
-  --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Right ), nextWS)
-
-  --  Reset the layouts on the current workspace to default.
-  , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
   -- Move focus to the next window.
   , ((modMask, xK_j), windows W.focusDown)
@@ -262,20 +262,39 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Move focus to the previous window.
   , ((modMask, xK_k), windows W.focusUp  )
 
+  --
+  -- SUPER-SHIFT + ...
+  --
+
+  --  Reset the layouts on the current workspace to default.
+  , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+
   -- Move focus to the master window.
   , ((modMask .|. shiftMask, xK_m), windows W.focusMaster  )
 
   -- Swap the focused window with the next window.
-  , ((modMask .|. shiftMask, xK_j), windows W.swapDown  )
+  -- , ((modMask .|. shiftMask, xK_j), windows W.swapDown  )
+
+  -- Swap the focused window with the previous window.
+  --
+  -- SUPER-CTRL + ...
+  --
 
   -- Swap the focused window with the next window.
-  , ((controlMask .|. modMask, xK_Down), windows W.swapDown  )
+  , ((modMask .|. controlMask, xK_Left), windows W.swapDown  )
 
   -- Swap the focused window with the previous window.
-  , ((modMask .|. shiftMask, xK_k), windows W.swapUp    )
+  , ((modMask .|. controlMask, xK_Right), windows W.swapUp  )
 
-  -- Swap the focused window with the previous window.
-  , ((controlMask .|. modMask, xK_Up), windows W.swapUp  )
+  -- Increment the number of windows in the master area.
+  , ((modMask .|. controlMask, xK_Down), sendMessage (IncMasterN 1))
+
+  -- Decrement the number of windows in the master area.
+  , ((modMask .|. controlMask, xK_Up), sendMessage (IncMasterN (-1)))
+
+  --
+  -- CTRL-SHIFT + ...
+  --
 
   -- Shrink the master area.
   , ((controlMask .|. shiftMask , xK_h), sendMessage Shrink)
@@ -286,11 +305,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Push window back into tiling.
   , ((controlMask .|. shiftMask , xK_t), withFocused $ windows . W.sink)
 
-  -- Increment the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN 1))
 
-  -- Decrement the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN (-1)))
 
   ]
   ++
